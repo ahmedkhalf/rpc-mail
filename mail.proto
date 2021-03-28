@@ -1,0 +1,49 @@
+syntax = "proto3";
+package protomail;
+
+option go_package = "/protomail";
+
+service Mail {
+    rpc ConnectClient (ConnectRequest) returns (ConnectResponce);
+    rpc LoginClient (LoginRequest) returns (Empty);
+    rpc SelectMailbox (SelectMailboxRequest) returns (Empty);
+    rpc DestroyClient (DestroyRequest) returns (Empty);
+}
+
+message Empty {
+    // This is an empty message
+}
+
+// ConnectClient
+
+message ConnectRequest {
+    uint64 clientid = 1;
+    string server = 2;
+    bool useTLS = 3;
+}
+
+message ConnectResponce {
+    uint64 clientPointer = 1;
+}
+
+// LoginClient
+
+message LoginRequest {
+    uint64 clientPointer = 1;
+    string username = 2;
+    string password = 3;
+}
+
+// SelectMailbox
+
+message SelectMailboxRequest {
+    uint64 clientPointer = 1;
+    string name = 2;
+    bool readonly = 3;
+}
+
+// DestroyClient
+
+message DestroyRequest {
+    uint64 clientPointer = 1;
+}
