@@ -6,8 +6,11 @@ option go_package = "/protomail";
 service Mail {
     rpc ConnectClient (ConnectRequest) returns (ConnectResponce);
     rpc LoginClient (LoginRequest) returns (Empty);
+    rpc LogoutClient (LogoutRequest) returns (Empty);
+    rpc DeleteClient (DeleteRequest) returns (Empty);
+
+    rpc ListMailboxes (ListMailboxesRequest) returns (stream ListMailboxesResponce);
     rpc SelectMailbox (SelectMailboxRequest) returns (Empty);
-    rpc DestroyClient (DestroyRequest) returns (Empty);
 }
 
 message Empty {
@@ -34,16 +37,32 @@ message LoginRequest {
     string password = 3;
 }
 
+// LogoutClient
+
+message LogoutRequest {
+    uint64 clientPointer = 1;
+}
+
+// DeleteClient
+
+message DeleteRequest {
+    uint64 clientPointer = 1;
+}
+
+// ListMailboxes
+
+message ListMailboxesRequest {
+    uint64 clientPointer = 1;
+}
+
+message ListMailboxesResponce {  // Stream
+    string mailboxName = 1;
+}
+
 // SelectMailbox
 
 message SelectMailboxRequest {
     uint64 clientPointer = 1;
-    string name = 2;
+    string mailboxName = 2;
     bool readonly = 3;
-}
-
-// DestroyClient
-
-message DestroyRequest {
-    uint64 clientPointer = 1;
 }
