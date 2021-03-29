@@ -1,2 +1,2 @@
 # rpc-mail
- gRPC mail client
+gRPC server for receiving and sending mail written in go.
